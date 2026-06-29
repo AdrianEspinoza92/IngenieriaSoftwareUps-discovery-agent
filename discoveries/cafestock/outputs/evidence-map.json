@@ -1,0 +1,19 @@
+{
+  "personas": [
+    { "name": "Dueño de cafetería", "role": "dueno_negocio", "primary": true },
+    { "name": "Empleado de ventas", "role": "empleado_ventas", "primary": true },
+    { "name": "Encargado de compras e inventario", "role": "encargado_compras", "primary": true }
+  ],
+  "pains": [
+    { "id": "registro-incompleto-ventas", "source": "entrevista_02_empleado_ventas.md", "persona": "Empleado de ventas" },
+    { "id": "descuadre-cierre", "source": "entrevista_02_empleado_ventas.md", "persona": "Empleado de ventas" },
+    { "id": "quiebres-stock", "source": "entrevista_01_dueno_cafeteria.md", "persona": "Dueño de cafetería" },
+    { "id": "inventario-manual-impreciso", "source": "entrevista_01_dueno_cafeteria.md", "persona": "Dueño de cafetería" },
+    { "id": "consumo-insumos-no-rastreado", "source": "entrevista_03_encargado_compras.md", "persona": "Encargado de compras e inventario" },
+    { "id": "compras-emergencia-costosas", "source": "entrevista_03_encargado_compras.md", "persona": "Encargado de compras e inventario" },
+    { "id": "sobrecompra-merma", "source": "entrevista_03_encargado_compras.md", "persona": "Encargado de compras e inventario" },
+    { "id": "sin-datos-rotacion", "source": "entrevista_01_dueno_cafeteria.md", "persona": "Dueño de cafetería" },
+    { "id": "dependencia-memoria-avisos", "source": "entrevista_02_empleado_ventas.md", "persona": "Empleado de ventas" },
+    { "id": "tiempo-revision-inventario", "source": "entrevista_03_encargado_compras.md", "persona": "Encargado de compras e inventario" }
+  ]
+}

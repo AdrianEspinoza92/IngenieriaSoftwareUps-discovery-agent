@@ -1,0 +1,48 @@
+{
+  "hypotheses": [
+    {
+      "id": "H-01",
+      "risk": "alto",
+      "assumption": "El empleado de ventas registrará cada venta en el momento durante la hora pico, aunque cueste unos segundos. Todo el MVP depende de esto: sin registro en el momento no hay descuento de insumos ni alertas confiables.",
+      "hypothesis": "Creemos que el empleado de ventas registrará la venta en el momento si el registro toma pocos segundos y no lo saca de atender, porque su dolor declarado es justamente que 'después lo anoto' y se olvida.",
+      "metric": "Porcentaje de ventas registradas en el momento (vs. reconstruidas al cierre) durante la franja pico de la mañana.",
+      "threshold": "≥ 80% de las ventas de la franja pico registradas en el momento, sostenido durante 5 días pico consecutivos.",
+      "experiment": "Mago de Oz: durante 1 semana, el empleado usa una pantalla simple de registro rápido (o una planilla/contador atendido por detrás) y se compara, mediante conteo de tickets/observación, cuántas ventas se registraron en el momento vs. al cierre.",
+      "timebox": "1 semana de operación, ~4 h de montaje y observación. Costo máximo: tiempo del equipo, sin construir el sistema.",
+      "decision": "Si pasa (≥80%) → perseverar: construir el registro rápido como núcleo. Si falla (<80%) → pivotar el mecanismo de captura (p. ej. registro por lotes entre clientes, o captura asistida) antes de invertir; si ni así sube, descartar el supuesto de captura manual en pico."
+    },
+    {
+      "id": "H-02",
+      "risk": "alto",
+      "assumption": "Las recetas de insumos por producto son lo bastante estables para que el descuento automático estime el consumo real con precisión útil.",
+      "hypothesis": "Creemos que descontar insumos por receta al vender estimará el stock real con error bajo si las porciones son consistentes, porque los productos clave (café con leche, capuchino) usan cantidades repetibles de leche y café.",
+      "metric": "Desviación entre el stock estimado por el descuento por receta y el conteo físico real de los insumos clave (leche, café), al cierre.",
+      "threshold": "Desviación ≤ 10% en leche y café medida al cierre, durante 5 días.",
+      "experiment": "Concierge: durante 5 días se calcula a mano el descuento por receta sobre las ventas y se contrasta con un conteo físico real al cierre de leche y café. No se construye nada.",
+      "timebox": "5 días, ~30 min/día de conteo. Costo máximo: tiempo del encargado de compras.",
+      "decision": "Si pasa (≤10%) → perseverar con descuento por receta. Si falla (>10%) → pivotar a recetas calibradas por producto o a conteo periódico asistido en vez de descuento automático puro; si el error es irreducible, descartar la estimación por receta como base de las alertas."
+    },
+    {
+      "id": "H-03",
+      "risk": "medio",
+      "assumption": "Una alerta de stock bajo se traduce en una reposición a tiempo (la alerta cambia el comportamiento, no solo informa).",
+      "hypothesis": "Creemos que el equipo repondrá antes del quiebre si recibe una alerta proactiva al cruzar el mínimo, porque hoy el quiebre ocurre por no enterarse a tiempo, no por falta de voluntad de reponer.",
+      "metric": "Porcentaje de alertas de stock bajo que terminan en reposición del insumo ANTES de que se agote durante el horario.",
+      "threshold": "≥ 70% de las alertas resueltas con reposición antes del quiebre, durante 2 semanas.",
+      "experiment": "Mago de Oz: durante 2 semanas, cuando el stock estimado a mano cruce el mínimo se envía una alerta manual por WhatsApp al encargado; se registra si repuso antes de agotarse.",
+      "timebox": "2 semanas, monitoreo manual diario (~15 min/día). Costo máximo: tiempo de quien monitorea.",
+      "decision": "Si pasa (≥70%) → perseverar: la alerta es la pieza de valor. Si falla (<70%) → pivotar el canal/anticipación de la alerta (más margen antes del mínimo, asignar responsable) o descartar la hipótesis de que basta informar para que repongan."
+    },
+    {
+      "id": "H-04",
+      "risk": "medio",
+      "assumption": "Los mínimos de stock fijados 'por experiencia' generan alertas útiles y no ruido (falsas alarmas que el equipo terminaría ignorando).",
+      "hypothesis": "Creemos que los mínimos definidos por el encargado producirán alertas accionables si reflejan su experiencia real del consumo, porque ya decide compras con ese criterio aunque sin datos.",
+      "metric": "Porcentaje de falsas alarmas: alertas disparadas que NO correspondían a un riesgo real de quiebre en los días siguientes.",
+      "threshold": "≤ 20% de falsas alarmas sobre el total de alertas emitidas, durante 2 semanas.",
+      "experiment": "Concierge: durante 2 semanas se emiten alertas según los mínimos propuestos y se clasifica cada una como acertada (hubo riesgo real de quiebre) o falsa alarma, contrastando con el consumo observado.",
+      "timebox": "2 semanas, clasificación diaria (~10 min/día). Puede correr en paralelo con H-03. Costo máximo: tiempo de clasificación.",
+      "decision": "Si pasa (≤20%) → perseverar: mínimos por experiencia sirven como punto de partida. Si falla (>20%) → pivotar a mínimos calibrados con el consumo medido (de H-02) en vez de solo experiencia; si siguen siendo ruido, descartar el umbral fijo y replantear la regla de alerta."
+    }
+  ]
+}
